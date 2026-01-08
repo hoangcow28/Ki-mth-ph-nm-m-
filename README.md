@@ -1,4 +1,4 @@
-![img.png](img.png)
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/d3a26fa2-6d02-49b4-bdd2-32f4712dcb00" />
 # Bài tập thực hành kiểm thử với JUnit
 
 ## 1. Thông tin chung
