@@ -1,12 +1,12 @@
 Trải nghiệm kiểm thử giao diện với CantUnsee
 
-*Truy cập website:
-*👉 https://cantunsee.space/
-*Thực hiện các bài kiểm tra phân biệt màu sắc và khả năng nhận diện giao diện
-*Mục tiêu: đạt điểm số cao nhất có thể
-*Minh chứng kết quả
-*Ảnh chụp màn hình kết quả làm bài trên CantUnsee
-*Ảnh có dấu hiệu cá nhân (ví dụ: đang đăng nhập Chrome)
+* Truy cập website:
+👉 https://cantunsee.space/
+* Thực hiện các bài kiểm tra phân biệt màu sắc và khả năng nhận diện giao diện
+* Mục tiêu: đạt điểm số cao nhất có thể
+* Minh chứng kết quả
+* Ảnh chụp màn hình kết quả làm bài trên CantUnsee
+* Ảnh có dấu hiệu cá nhân (ví dụ: đang đăng nhập Chrome)
 📌 Hình ảnh minh chứng:
 <img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/d3a26fa2-6d02-49b4-bdd2-32f4712dcb00" />
 
