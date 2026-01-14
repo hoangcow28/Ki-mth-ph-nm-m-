@@ -2,9 +2,9 @@
 # Bài tập thực hành kiểm thử với JUnit
 
 📋 Thông tin sinh viên
-Họ và tên: Lê Trung Hoàng
-MSSV: BIT230174
-Lớp: 23IT5
+* Họ và tên: Lê Trung Hoàng
+* MSSV: BIT230174
+* Lớp: 23IT5
 
 ## 1. Thông tin chung
 
