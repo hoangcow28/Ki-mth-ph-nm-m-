@@ -1,157 +1,87 @@
 package org.example;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.Arguments;
 
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class StudentAnalyzerTest {
 
-    // ===============================
+    // =====================================
     // TEST CHO countExcellentStudents
-    // ===============================
+    // =====================================
 
     /**
-     * Trường hợp bình thường:
-     * Danh sách có cả điểm hợp lệ và không hợp lệ
+     * Kiểm tra số sinh viên có điểm xuất sắc (>= 8.0)
+     * Áp dụng cho nhiều tình huống khác nhau
      */
-    @Test
-    public void testCountExcellentStudents_NormalCase() {
+    @ParameterizedTest
+    @MethodSource("provideScoresForExcellentCount")
+    public void testCountExcellentStudents(
+            List<Double> scores,
+            int expected
+    ) {
         StudentAnalyzer analyzer = new StudentAnalyzer();
+        assertEquals(expected, analyzer.countExcellentStudents(scores));
+    }
 
-        int result = analyzer.countExcellentStudents(
-                Arrays.asList(9.0, 8.5, 7.0, 11.0, -1.0)
+    static Stream<Arguments> provideScoresForExcellentCount() {
+        return Stream.of(
+                // Trường hợp bình thường: có điểm hợp lệ và không hợp lệ
+                Arguments.of(Arrays.asList(9.0, 8.5, 7.0, 11.0, -1.0), 2),
+
+                // Trường hợp toàn bộ hợp lệ
+                Arguments.of(Arrays.asList(8.0, 9.0, 10.0), 3),
+
+                // Trường hợp toàn bộ không hợp lệ
+                Arguments.of(Arrays.asList(-5.0, 11.0, 20.0), 0),
+
+                // Trường hợp danh sách rỗng
+                Arguments.of(Collections.emptyList(), 0)
         );
-
-        assertEquals(2, result);
     }
 
-    /**
-     * Trường hợp danh sách toàn bộ hợp lệ
-     */
-    @Test
-    public void testCountExcellentStudents_AllValid() {
-        StudentAnalyzer analyzer = new StudentAnalyzer();
-
-        int result = analyzer.countExcellentStudents(
-                Arrays.asList(8.0, 9.0, 10.0)
-        );
-
-        assertEquals(3, result);
-    }
-
-    /**
-     * Trường hợp biên: danh sách rỗng
-     */
-    @Test
-    public void testCountExcellentStudents_EmptyList() {
-        StudentAnalyzer analyzer = new StudentAnalyzer();
-
-        int result = analyzer.countExcellentStudents(Collections.emptyList());
-
-        assertEquals(0, result);
-    }
-
-    /**
-     * Trường hợp ngoại lệ: toàn bộ điểm không hợp lệ
-     */
-    @Test
-    public void testCountExcellentStudents_AllInvalid() {
-        StudentAnalyzer analyzer = new StudentAnalyzer();
-
-        int result = analyzer.countExcellentStudents(
-                Arrays.asList(-5.0, 11.0, 20.0)
-        );
-
-        assertEquals(0, result);
-    }
-
-    // ===============================
+    // =====================================
     // TEST CHO calculateValidAverage
-    // ===============================
+    // =====================================
 
     /**
-     * Trường hợp bình thường:
-     * Có cả điểm hợp lệ và không hợp lệ
+     * Kiểm tra điểm trung bình của các điểm hợp lệ (0–10)
      */
-    @Test
-    public void testCalculateValidAverage_NormalCase() {
+    @ParameterizedTest
+    @MethodSource("provideScoresForAverage")
+    public void testCalculateValidAverage(
+            List<Double> scores,
+            double expected
+    ) {
         StudentAnalyzer analyzer = new StudentAnalyzer();
-
-        double average = analyzer.calculateValidAverage(
-                Arrays.asList(9.0, 8.5, 7.0, 11.0, -1.0)
-        );
-
-        assertEquals(8.17, average, 0.01);
+        assertEquals(expected, analyzer.calculateValidAverage(scores), 0.01);
     }
 
-    /**
-     * Trường hợp danh sách toàn bộ hợp lệ
-     */
-    @Test
-    public void testCalculateValidAverage_AllValid() {
-        StudentAnalyzer analyzer = new StudentAnalyzer();
+    static Stream<Arguments> provideScoresForAverage() {
+        return Stream.of(
+                // Trường hợp bình thường: có điểm hợp lệ và không hợp lệ
+                Arguments.of(Arrays.asList(9.0, 8.5, 7.0, 11.0, -1.0), 8.17),
 
-        double average = analyzer.calculateValidAverage(
-                Arrays.asList(6.0, 8.0, 10.0)
+                // Trường hợp toàn bộ điểm hợp lệ
+                Arguments.of(Arrays.asList(6.0, 8.0, 10.0), 8.0),
+
+                // Trường hợp biên: toàn bộ 0
+                Arguments.of(Arrays.asList(0.0, 0.0, 0.0), 0.0),
+
+                // Trường hợp biên: toàn bộ 10
+                Arguments.of(Arrays.asList(10.0, 10.0), 10.0),
+
+                // Trường hợp toàn bộ không hợp lệ
+                Arguments.of(Arrays.asList(-2.0, 12.0, 100.0), 0.0),
+
+                // Trường hợp danh sách rỗng
+                Arguments.of(Collections.emptyList(), 0.0)
         );
-
-        assertEquals(8.0, average, 0.01);
-    }
-
-    /**
-     * Trường hợp biên: danh sách chỉ chứa 0
-     */
-    @Test
-    public void testCalculateValidAverage_AllZero() {
-        StudentAnalyzer analyzer = new StudentAnalyzer();
-
-        double average = analyzer.calculateValidAverage(
-                Arrays.asList(0.0, 0.0, 0.0)
-        );
-
-        assertEquals(0.0, average);
-    }
-
-    /**
-     * Trường hợp biên: danh sách chỉ chứa 10
-     */
-    @Test
-    public void testCalculateValidAverage_AllTen() {
-        StudentAnalyzer analyzer = new StudentAnalyzer();
-
-        double average = analyzer.calculateValidAverage(
-                Arrays.asList(10.0, 10.0)
-        );
-
-        assertEquals(10.0, average);
-    }
-
-    /**
-     * Trường hợp ngoại lệ: toàn bộ điểm không hợp lệ
-     */
-    @Test
-    public void testCalculateValidAverage_AllInvalid() {
-        StudentAnalyzer analyzer = new StudentAnalyzer();
-
-        double average = analyzer.calculateValidAverage(
-                Arrays.asList(-2.0, 12.0, 100.0)
-        );
-
-        assertEquals(0.0, average);
-    }
-
-    /**
-     * Trường hợp biên: danh sách rỗng
-     */
-    @Test
-    public void testCalculateValidAverage_EmptyList() {
-        StudentAnalyzer analyzer = new StudentAnalyzer();
-
-        double average = analyzer.calculateValidAverage(Collections.emptyList());
-
-        assertEquals(0.0, average);
     }
 }
